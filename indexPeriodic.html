@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elemental Tree Incremental</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #001f3f, #003366);
+      color: #fff;
+      font-family: 'Trebuchet MS', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    main {
+      margin-top: 50px;
+    }
+
+    .currency {
+      font-size: 1.5rem;
+      margin: 20px;
+    }
+
+    .value {
+      font-weight: bold;
+      color: #00ffff;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header> Elemental Tree Incremental </header>
+
+  <main>
+    <div class="currency">
+      Hydrogen: <span id="hydrogen" class="value">0</span>
+    </div>
+    <p>Generating 1 Hydrogen per second...</p>
+  </main>
+
+  <script>
+    let hydrogen = 0;
+    const hydrogenDisplay = document.getElementById('hydrogen');
+
+    // Gain 1 Hydrogen per second
+    setInterval(() => {
+      hydrogen += 1;
+      hydrogenDisplay.textContent = hydrogen.toLocaleString();
+    }, 1000);
+  </script>
+</body>
+</html>
+
