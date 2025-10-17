@@ -177,7 +177,7 @@
       <div class="upgrade" id="upgrade2" data-cost="50" style="grid-area: up2;">H-Upgrade 2 (Cost: 50 Hydrogen)</div>
       <div class="upgrade" id="upgrade3" data-cost="125" style="grid-area: up3;">H-Upgrade 3 (Cost: 125 Hydrogen)</div>
       <div class="upgrade" id="upgrade4" data-cost="500" style="grid-area: up4;">H-upgrade 4 (cost: 500 Hydrogen)</div>
-      <button class="reset-button" id="heliumResetButton" style="grid-area: helium;">Reset for Helium</button>
+      <button class="reset-button" id="heliumResetButton" style="grid-area: helium; display: none; margin: 0; background: #ff3333;">Reset for Helium (Unlocked by H-4)</button>
       <!-- Use an SVG for connector lines so we can draw diagonal lines cleanly -->
       <svg class="lines" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <line id="line1-4" />
@@ -271,7 +271,7 @@ function createSaveData() {
     playerId: getPlayerId(),
     hydrogen,
     hydrogenRate,
-    helium,
+    helium: helium || 0,
     upgradesBought,
     version: '1.0',
     timestamp: Date.now()
@@ -563,7 +563,7 @@ let heliumMultiplier = 1;
 // Calculate Helium gain based on current hydrogen amount
 function calculateHeliumGain() {
   if (hydrogen < 1000) return 0; // avoid negative/NaN
-  return Math.floor(Math.pow(Math.log(hydrogen / 1000), 3));
+  return Math.floor(Math.pow(Math.log(hydrogen / 1000), 2));
 }
 
 // Update display to include Helium
@@ -625,11 +625,16 @@ document.getElementById('heliumResetButton').onclick = () => {
   }
 };
 
-// Main game loop with Helium multiplier
+//Main game loop with Helium multiplier
+let lastUpdate = Date.now();
 setInterval(() => {
-  hydrogen += hydrogenRate * heliumMultiplier;
+  const now = Date.now();
+  const deltaTime = (now - lastUpdate) / 1000; // Convert to seconds
+  lastUpdate = now;
+  
+  hydrogen += hydrogenRate * deltaTime;
   updateDisplay();
-}, 1000);
+}, 500);
 
 </script>
 </body>
